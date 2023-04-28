@@ -14,6 +14,8 @@ import utilz.stateConstants.AnimalState;
 import utilz.stateConstants.GameState;
 import utilz.stateConstants.MapState;
 import utilz.stateConstants.MenuState;
+import utilz.stateConstants.NextState;
+import utilz.stateConstants.PlayState;
 
 import static utilz.constants.ButtonTypes.*;
 import static utilz.constants.MenuTypes.*;
@@ -41,7 +43,7 @@ public class Menu extends State implements Statemethods {
 		backgroundMenu = new Background(0 , 0,MENU , 0, 0);
 		play = new MenuButton(330 ,420, PLAY, GameState.PLAYING);
 		next = new MenuButton(420 ,420 ,NEXT ,GameState.MENU);
-		back = new MenuButton(530, 420, BACK, GameState.MENU);
+		back = new MenuButton(420, 420, BACK, GameState.MENU);
 		map1 = new ButtonMap(170, 150, STREETHOME, MapState.MAP1);
 		map2 = new ButtonMap(570, 150, MOUNTAINHOME, MapState.MAP2);
 		ani1 = new ButtonAnimal(100, 150, MOUSEHOME, AnimalState.MOUSE);
@@ -88,7 +90,12 @@ public class Menu extends State implements Statemethods {
 			// defaul draw;
 			map1.draw(g);
 			map2.draw(g);
-			next.draw(g);
+			switch(NextState.state) {
+			case NO:
+				break;
+			case YES:
+				next.draw(g);
+			}
 			break;
 		case MENU2:
 			// check animal state to draw animal choose;
@@ -110,7 +117,12 @@ public class Menu extends State implements Statemethods {
 			ani1.draw(g);
 			ani2.draw(g);
 			ani3.draw(g);
-			play.draw(g);
+			switch(PlayState.state) {
+			case NO:
+				break;
+			case YES:
+				play.draw(g);
+			}
 			back.draw(g);
 		}
 	}
@@ -125,12 +137,14 @@ public class Menu extends State implements Statemethods {
 			if(isChooseMap(e, map1)) {
 				map1.applyMapState();
 				game.getPlaying().createMap();
+				NextState.state = NextState.YES;
 				System.out.println(MapState.state);
 			}
 			// is choose map 2;
 			if(isChooseMap(e, map2)) {
 				map2.applyMapState();
 				game.getPlaying().createMap();
+				NextState.state = NextState.YES;
 				System.out.println(MapState.state);
 			}
 			// is choose next button,
@@ -145,18 +159,24 @@ public class Menu extends State implements Statemethods {
 			if(isChooseAnimal(e, ani1)) {
 				ani1.applyMapState();
 				game.getPlaying().createAnimal();
+				back.setLocationRight();
+				PlayState.state = PlayState.YES;
 				System.out.println(AnimalState.MOUSE);
 			}
 			// is choose animal 2;
 			if(isChooseAnimal(e, ani2)) {
 				ani2.applyMapState();
 				game.getPlaying().createAnimal();
+				back.setLocationRight();
+				PlayState.state = PlayState.YES;
 				System.out.println(AnimalState.CAT);
 			}
 			// is choose animal 3;
 			if(isChooseAnimal(e, ani3)) {
 				ani3.applyMapState();
 				game.getPlaying().createAnimal();
+				back.setLocationRight();
+				PlayState.state = PlayState.YES;
 				System.out.println(AnimalState.DOG);
 			}
 			// is choose play button;
@@ -167,7 +187,6 @@ public class Menu extends State implements Statemethods {
 			// is choose back button;
 			if(isIn(e,back)) {
 				System.out.println("back");
-				//back.applyGameState();
 				MenuState.state = MenuState.MENU1;
 			}
 			break;

@@ -28,4 +28,15 @@ public class stateConstants {
 		MARK1, MARK2, MARK3;
 		public static ScoreState state = MARK1;
 	}
+	
+	public enum NextState{
+		NO, YES;
+		public static NextState state = NO;
+	}
+	
+	public enum PlayState{
+		NO, YES;
+		public static PlayState state = NO;
+	}
+	
 }

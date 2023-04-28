@@ -47,4 +47,9 @@ public class MenuButton {
 	public void applyGameState() {
 		GameState.state = state;
 	}
+	public void setLocationRight() {
+		this.x = 530;
+		this.y = 420;
+		bounds = new Rectangle(x,y,120,40);
+	}
 }
